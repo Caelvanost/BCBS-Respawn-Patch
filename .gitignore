@@ -3,6 +3,7 @@ build/
 out/
 dist/
 *.pex
+# Release archives and Vortex installation packages
 *.zip
 *.rar
 *.7z
