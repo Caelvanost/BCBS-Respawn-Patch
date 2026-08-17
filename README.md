@@ -1,6 +1,6 @@
 # BCBS Respawn Patch
 
-**Current version: `0.2.1`**
+**Current version: `0.2.2`**
 
 Standalone dynamic checkpoint add-on for **Basic Co-op Bleedout System for Skyrim Together**.
 
@@ -135,7 +135,16 @@ The Papyrus environment must provide the SkyUI source dependencies in `Data/Sour
 SKI_ConfigBase.psc
 SKI_ConfigManager.psc
 SKI_QuestBase.psc
+TESV_Papyrus_Flags.flg
 ```
+
+By default, `build_release.bat` uses:
+
+```text
+Data/Source/Scripts/TESV_Papyrus_Flags.flg
+```
+
+You can override the flags file path by setting `PAPYRUS_FLAGS` before running the build.
 
 The generated release package contains only:
 
