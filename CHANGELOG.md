@@ -16,3 +16,7 @@
 - Added patch-owned globals for MCM configuration state.
 - Preserved interior transition, combat, and bleedout checkpoint protections.
 - Added `build_release.bat` to build the native DLL, compile both Papyrus scripts, stage the mod in `package/`, and create the versioned deployment archive in `dist/`.
+- Added `VERSION` as the canonical version source and bumped the development version to `0.2.1`.
+- Release archives now derive their version directly from `VERSION`.
+- The canonical Creation Kit plugin is now `Source/Plugin/BCBSRespawnPatch.esp`.
+- Adopted semantic project versioning: small changes increment the third number; larger changes increment the second number and reset the third to zero.
