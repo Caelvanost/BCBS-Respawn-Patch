@@ -64,4 +64,4 @@ The Papyrus source must also be compiled to `BCBSRespawnCheckpointAlias.pex` aft
 
 ## Status
 
-Checkpoint updates have been observed working in the earlier Papyrus implementation. The standalone quest + native save listener architecture still needs in-game validation, followed by a full two-player party defeat -> teleport -> recovery test before the first stable Nexus release.
+Checkpoint updates have been observed working in the earlier Papyrus implementation. The standalone quest + native save listener architecture still needs in-game validation, including confirming `kSaveGame` fires for the desired manual/quicksave/autosave cases on the target runtime, followed by a full two-player party defeat -> teleport -> recovery test before the first stable Nexus release.
