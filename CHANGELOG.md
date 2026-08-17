@@ -6,4 +6,7 @@
 - Removed the modified `aaaessentialplayerscript.psc` from the repository.
 - Removed the dependency on SM Essential Player SE source code for this patch's implementation.
 - Added plugin setup documentation for a dedicated Start Game Enabled quest and PlayerRef alias.
-- Preserved F5, interior transition, outdoor timer, combat, and bleedout checkpoint behavior.
+- Added a minimal CommonLibSSE-NG SKSE plugin that listens for `kSaveGame`.
+- Replaced the hardcoded F5 trigger with checkpoints after any successful local game save: manual save, quicksave, or autosave.
+- Added the patch-owned `BCBSRP_SaveSerial` global as the native-to-Papyrus save-event bridge.
+- Preserved interior transition, outdoor timer, combat, and bleedout checkpoint behavior.
