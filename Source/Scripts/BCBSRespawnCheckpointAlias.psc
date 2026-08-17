@@ -11,11 +11,11 @@ Scriptname BCBSRespawnCheckpointAlias extends ReferenceAlias
 ; the local BCBS recall marker.
 
 GlobalVariable Property SaveSerial Auto
+GlobalVariable Property OutdoorIntervalMinutes Auto
+GlobalVariable Property TimedOutdoorEnabled Auto
+GlobalVariable Property ShowNotifications Auto
 
 ObjectReference HKPBCRecallPoint
-
-; Five real-time minutes between automatic outdoor checkpoints.
-Float OutdoorCheckpointInterval = 300.0
 
 Float lastOutdoorCheckpointTime = 0.0
 Float lastSeenSaveSerial = 0.0
@@ -130,17 +130,55 @@ Function UpdateCoopCheckpointSystem()
         return
     endif
 
-    ; Automatic checkpoint every five real-time minutes while outdoors,
-    ; but never during combat.
-    if !currentlyInterior
+    ; Automatic outdoor checkpoints are optional and their interval is read
+    ; from patch-owned globals configured through the SkyUI MCM.
+    if !currentlyInterior && AreTimedOutdoorCheckpointsEnabled()
         Float currentTime = Utility.GetCurrentRealTime()
+        Float intervalSeconds = GetOutdoorCheckpointIntervalSeconds()
 
-        if currentTime - lastOutdoorCheckpointTime >= OutdoorCheckpointInterval
+        if currentTime - lastOutdoorCheckpointTime >= intervalSeconds
             if !playerRef.IsInCombat()
                 SetCoopCheckpoint()
             endif
         endif
     endif
+EndFunction
+
+
+Bool Function AreTimedOutdoorCheckpointsEnabled()
+    if TimedOutdoorEnabled
+        return TimedOutdoorEnabled.GetValue() >= 0.5
+    endif
+
+    ; Safe fallback for an older/misconfigured ESP.
+    return true
+EndFunction
+
+
+Float Function GetOutdoorCheckpointIntervalSeconds()
+    Float minutes = 5.0
+
+    if OutdoorIntervalMinutes
+        minutes = OutdoorIntervalMinutes.GetValue()
+    endif
+
+    ; Keep runtime behavior sane even if the global was edited externally.
+    if minutes < 1.0
+        minutes = 1.0
+    elseif minutes > 30.0
+        minutes = 30.0
+    endif
+
+    return minutes * 60.0
+EndFunction
+
+
+Bool Function AreCheckpointNotificationsEnabled()
+    if ShowNotifications
+        return ShowNotifications.GetValue() >= 0.5
+    endif
+
+    return true
 EndFunction
 
 
@@ -159,6 +197,8 @@ Function SetCoopCheckpoint()
     endif
 
     if !HKPBCRecallPoint
+        ; Keep configuration/runtime errors visible even when normal checkpoint
+        ; notifications are disabled.
         Debug.Notification("BCBS Respawn Patch: checkpoint marker not found.")
         return
     endif
@@ -166,5 +206,7 @@ Function SetCoopCheckpoint()
     HKPBCRecallPoint.MoveTo(playerRef, 0.0, 0.0, 0.0, true)
     lastOutdoorCheckpointTime = Utility.GetCurrentRealTime()
 
-    Debug.Notification("Checkpoint updated.")
+    if AreCheckpointNotificationsEnabled()
+        Debug.Notification("Checkpoint updated.")
+    endif
 EndFunction
