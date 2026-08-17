@@ -49,9 +49,9 @@ The Papyrus script resolves the existing BCBS recall marker with:
 
 `Game.GetFormFromFile(0x000001, "PartyBleedoutCheck.esp")`
 
-The native SKSE plugin listens for `SKSE::MessagingInterface::kSaveGame`. When the local game successfully saves, it increments `BCBSRP_SaveSerial`. On its next update, the Papyrus alias sees the changed serial and moves that client's BCBS recall marker to the local player.
+The native SKSE plugin listens for `SKSE::MessagingInterface::kSaveGame`. When the local game reports a completed save, it increments `BCBSRP_SaveSerial`. On its next update, the Papyrus alias sees the changed serial and moves that client's BCBS recall marker to the local player.
 
-This intentionally applies to **all game saves** reported by SKSE: manual saves, quicksaves, and autosaves. Each Skyrim Together client handles its own saves independently.
+The intended behavior is that **manual saves, quicksaves, and autosaves** all update the checkpoint. Each Skyrim Together client handles its own saves independently. Confirm all three save types on the target Skyrim/SKSE runtime during validation before release.
 
 No record from SM Essential Player SE is overridden or modified by this patch.
 
