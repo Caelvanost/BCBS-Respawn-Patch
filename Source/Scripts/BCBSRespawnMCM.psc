@@ -37,17 +37,11 @@ Event OnPageReset(String page)
         intervalFlags = OPTION_FLAG_DISABLED
     endif
 
-    outdoorIntervalOID = AddSliderOption(
-        "Outdoor checkpoint interval",
-        GetOutdoorIntervalMinutes(),
-        "{0} min",
-        intervalFlags)
+    outdoorIntervalOID = AddSliderOption("Outdoor checkpoint interval", GetOutdoorIntervalMinutes(), "{0} min", intervalFlags)
 
     AddEmptyOption()
     AddHeaderOption("Interface")
-    notificationsOID = AddToggleOption(
-        "Checkpoint notifications",
-        GetNotificationsEnabled())
+    notificationsOID = AddToggleOption("Checkpoint notifications", GetNotificationsEnabled())
 EndEvent
 
 
