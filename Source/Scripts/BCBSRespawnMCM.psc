@@ -18,6 +18,17 @@ Int Function GetVersion()
 EndFunction
 
 
+Event OnConfigInit()
+    ; ModName belongs to SKI_ConfigBase. Access it through a parent-typed
+    ; reference so Papyrus uses the inherited property's public setter instead
+    ; of trying to link directly against the parent's backing variable.
+    SKI_ConfigBase configBase = Self as SKI_ConfigBase
+    if configBase
+        configBase.ModName = "BCBS Respawn Patch"
+    endif
+EndEvent
+
+
 Event OnPageReset(String page)
     SetTitleText("BCBS Respawn Patch")
     SetCursorFillMode(TOP_TO_BOTTOM)
