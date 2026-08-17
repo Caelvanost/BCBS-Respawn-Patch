@@ -28,6 +28,8 @@ The **BCBS Respawn Patch** SkyUI MCM contains three settings:
 
 MCM settings are local to each client. Player 1 and Player 2 can use different outdoor intervals if desired.
 
+The MCM uses the standard SkyUI `SKI_ConfigBase` API. MCM Helper is not required.
+
 ## Architecture
 
 Papyrus checkpoint logic:
