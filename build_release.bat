@@ -6,6 +6,8 @@ if "%ROOT:~-1%"=="\" set "ROOT=%ROOT:~0,-1%"
 set "BUILD_DIR=%ROOT%\build"
 set "PACKAGE_DIR=%ROOT%\package"
 set "DIST_DIR=%ROOT%\dist"
+set "VERSION_FILE=%ROOT%\VERSION"
+set "ESP_SOURCE=%ROOT%\Source\Plugin\BCBSRespawnPatch.esp"
 
 rem Allow an override, otherwise use the local Skyrim path used for development.
 if not defined SKYRIM_DIR set "SKYRIM_DIR=C:\Games\Steam\steamapps\common\Skyrim Special Edition"
@@ -14,16 +16,18 @@ if not defined PAPYRUS_COMPILER set "PAPYRUS_COMPILER=%SKYRIM_DIR%\Papyrus Compi
 if not defined PAPYRUS_FLAGS set "PAPYRUS_FLAGS=%SKYRIM_DIR%\TESV_Papyrus_Flags.flg"
 set "PAPYRUS_IMPORTS=%SKYRIM_DIR%\Data\Source\Scripts;%ROOT%\Source\Scripts"
 
-for /f "tokens=2" %%V in ('findstr /r /c:"^[ ]*VERSION [0-9]" "%ROOT%\CMakeLists.txt"') do set "VERSION=%%V"
+call :require_file "%VERSION_FILE%" "VERSION"
+if errorlevel 1 exit /b 1
+set /p VERSION=<"%VERSION_FILE%"
 if not defined VERSION (
-    echo [ERROR] Could not read VERSION from CMakeLists.txt.
+    echo [ERROR] VERSION is empty.
     exit /b 1
 )
 
 set "ZIP_NAME=BCBS-Respawn-Patch-v%VERSION%.zip"
 set "ZIP_PATH=%DIST_DIR%\%ZIP_NAME%"
 
-call :require_file "%SKYRIM_DIR%\Data\BCBSRespawnPatch.esp" "BCBSRespawnPatch.esp"
+call :require_file "%ESP_SOURCE%" "Source\Plugin\BCBSRespawnPatch.esp"
 if errorlevel 1 exit /b 1
 call :require_file "%PAPYRUS_COMPILER%" "PapyrusCompiler.exe"
 if errorlevel 1 exit /b 1
@@ -98,7 +102,7 @@ if errorlevel 1 goto :fail
 
 echo.
 echo [4/5] Staging release package...
-copy /y "%SKYRIM_DIR%\Data\BCBSRespawnPatch.esp" "%PACKAGE_DIR%\BCBSRespawnPatch.esp" >nul || goto :fail
+copy /y "%ESP_SOURCE%" "%PACKAGE_DIR%\BCBSRespawnPatch.esp" >nul || goto :fail
 copy /y "!DLL_PATH!" "%PACKAGE_DIR%\SKSE\Plugins\BCBSRespawnPatch.dll" >nul || goto :fail
 
 echo.
@@ -113,6 +117,7 @@ echo.
 echo ============================================================
 echo  SUCCESS
 
+echo  Version: %VERSION%
 echo  Package: %PACKAGE_DIR%
 echo  Archive: %ZIP_PATH%
 echo ============================================================
