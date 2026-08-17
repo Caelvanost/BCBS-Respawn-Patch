@@ -15,3 +15,4 @@
 - Added an option to hide normal checkpoint notifications.
 - Added patch-owned globals for MCM configuration state.
 - Preserved interior transition, combat, and bleedout checkpoint protections.
+- Added `build_release.bat` to build the native DLL, compile both Papyrus scripts, stage the mod in `package/`, and create the versioned deployment archive in `dist/`.
