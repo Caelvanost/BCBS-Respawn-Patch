@@ -24,3 +24,5 @@
 # Existing local/tooling artifacts
 .vscode/
 .idea/
+/.codex/
+/.entire/
