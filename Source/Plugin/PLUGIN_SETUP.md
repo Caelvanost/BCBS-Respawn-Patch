@@ -2,6 +2,12 @@
 
 Create a small plugin named `BCBSRespawnPatch.esp` (ESL flag is suitable if desired) containing the controller quest, its player alias, and patch-owned global variables used for save-event and MCM configuration state.
 
+After editing and saving the plugin in the Creation Kit, copy the current canonical plugin into the repository at:
+
+`Source/Plugin/BCBSRespawnPatch.esp`
+
+`build_release.bat` packages the ESP from this repository path rather than from Skyrim's live `Data` folder.
+
 ## Runtime requirement
 
 The configuration menu uses the standard SkyUI MCM API (`SKI_ConfigBase`), so **SkyUI is required** at runtime. MCM Helper is not required.
