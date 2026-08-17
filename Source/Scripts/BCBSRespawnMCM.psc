@@ -18,6 +18,11 @@ Int Function GetVersion()
 EndFunction
 
 
+Event OnConfigInit()
+    ModName = "BCBS Respawn Patch"
+EndEvent
+
+
 Event OnPageReset(String page)
     SetTitleText("BCBS Respawn Patch")
     SetCursorFillMode(TOP_TO_BOTTOM)
