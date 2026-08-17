@@ -1,5 +1,7 @@
 # BCBS Respawn Patch
 
+**Current version: `0.2.1`**
+
 Standalone dynamic checkpoint add-on for **Basic Co-op Bleedout System for Skyrim Together**.
 
 This project does not modify or redistribute `aaaEssentialPlayerScript` from SM Essential Player SE. The checkpoint logic lives in its own player alias script, while a very small SKSE plugin listens for game-save events.
@@ -40,6 +42,10 @@ SkyUI MCM:
 
 `Source/Scripts/BCBSRespawnMCM.psc`
 
+Creation Kit plugin source:
+
+`Source/Plugin/BCBSRespawnPatch.esp`
+
 Native SKSE save-event listener:
 
 `src/main.cpp`
@@ -73,11 +79,34 @@ MCM Helper is **not** required.
 
 See [`Source/Plugin/PLUGIN_SETUP.md`](Source/Plugin/PLUGIN_SETUP.md).
 
+## Versioning
+
+`VERSION` is the canonical project version.
+
+Version policy:
+
+- small change / bugfix: increment the third number (`0.2.1` -> `0.2.2`);
+- larger feature/change: increment the second number and reset the third to zero (`0.2.2` -> `0.3.0`).
+
+When the version changes, keep the displayed version in this README and `vcpkg.json` synchronized with `VERSION`.
+
+CMake reads `VERSION` directly, and `build_release.bat` uses the same file for the deployment archive name, so a build for version `X.Y.Z` produces:
+
+```text
+dist/BCBS-Respawn-Patch-vX.Y.Z.zip
+```
+
 ## Build
 
 The native listener uses CommonLibSSE-NG and the same vcpkg registry configuration used by the other Caelvanost SKSE projects.
 
 ### Automated release build
+
+Before building, copy the current Creation Kit plugin to:
+
+```text
+Source/Plugin/BCBSRespawnPatch.esp
+```
 
 Run from the repository root:
 
@@ -87,10 +116,10 @@ build_release.bat
 
 The script:
 
-1. reads the release version from `CMakeLists.txt`;
+1. reads the release version from `VERSION`;
 2. configures and builds `BCBSRespawnPatch.dll` in Release mode;
 3. compiles `BCBSRespawnCheckpointAlias.psc` and `BCBSRespawnMCM.psc`;
-4. copies the locally created `BCBSRespawnPatch.esp` from Skyrim's `Data` folder;
+4. copies `Source/Plugin/BCBSRespawnPatch.esp` into the release package;
 5. stages the deployable mod in `package/`;
 6. creates `dist/BCBS-Respawn-Patch-v<VERSION>.zip`.
 
