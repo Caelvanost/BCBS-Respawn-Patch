@@ -3,16 +3,22 @@ Scriptname BCBSRespawnCheckpointAlias extends ReferenceAlias
 ; BCBS Respawn Patch
 ; Standalone checkpoint controller for Basic Co-op Bleedout System.
 ; This script contains no code from SM Essential Player SE.
+;
+; Save detection is supplied by the companion SKSE plugin. The native plugin
+; increments SaveSerial whenever SKSE reports kSaveGame (manual save,
+; quicksave, or autosave). This alias polls that value and updates the local
+; BCBS recall marker.
+
+GlobalVariable Property SaveSerial Auto
 
 ObjectReference HKPBCRecallPoint
 
 ; Five real-time minutes between automatic outdoor checkpoints.
 Float OutdoorCheckpointInterval = 300.0
 
-; F5 = DirectInput scan code 63.
-Int QuickSaveKey = 63
-
 Float lastOutdoorCheckpointTime = 0.0
+Float lastSeenSaveSerial = 0.0
+
 Cell checkpointLastCell = None
 Bool checkpointWasInterior = false
 Bool checkpointSystemInitialized = false
@@ -42,8 +48,13 @@ Function InitializeCheckpointSystem()
     checkpointLastCell = playerRef.GetParentCell()
     checkpointWasInterior = playerRef.IsInInterior()
 
-    UnregisterForKey(QuickSaveKey)
-    RegisterForKey(QuickSaveKey)
+    if SaveSerial
+        ; Establish a baseline so loading an existing save does not itself
+        ; create a new checkpoint.
+        lastSeenSaveSerial = SaveSerial.GetValue()
+    else
+        lastSeenSaveSerial = 0.0
+    endif
 
     lastOutdoorCheckpointTime = Utility.GetCurrentRealTime()
     checkpointSystemInitialized = true
@@ -67,7 +78,23 @@ Function UpdateCoopCheckpointSystem()
         return
     endif
 
-    ; Never move the checkpoint while the local player is downed.
+    ; A successful local game save (manual save, quicksave, or autosave)
+    ; requests a checkpoint. Each Skyrim Together client receives and handles
+    ; its own save event independently.
+    if SaveSerial
+        Float currentSaveSerial = SaveSerial.GetValue()
+        if currentSaveSerial != lastSeenSaveSerial
+            lastSeenSaveSerial = currentSaveSerial
+
+            ; Never move the checkpoint while the local player is downed.
+            if playerRef.GetActorValue("Health") > 0.0
+                SetCoopCheckpoint()
+            endif
+            return
+        endif
+    endif
+
+    ; Never move automatic/cell checkpoints while the local player is downed.
     if playerRef.GetActorValue("Health") <= 0.0
         return
     endif
@@ -115,22 +142,6 @@ Function UpdateCoopCheckpointSystem()
         endif
     endif
 EndFunction
-
-
-Event OnKeyDown(Int keyCode)
-    if keyCode != QuickSaveKey
-        return
-    endif
-
-    Actor playerRef = GetActorReference()
-    if !playerRef
-        return
-    endif
-
-    if playerRef.GetActorValue("Health") > 0.0
-        SetCoopCheckpoint()
-    endif
-EndEvent
 
 
 Function SetCoopCheckpoint()
