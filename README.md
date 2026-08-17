@@ -77,6 +77,51 @@ See [`Source/Plugin/PLUGIN_SETUP.md`](Source/Plugin/PLUGIN_SETUP.md).
 
 The native listener uses CommonLibSSE-NG and the same vcpkg registry configuration used by the other Caelvanost SKSE projects.
 
+### Automated release build
+
+Run from the repository root:
+
+```bat
+build_release.bat
+```
+
+The script:
+
+1. reads the release version from `CMakeLists.txt`;
+2. configures and builds `BCBSRespawnPatch.dll` in Release mode;
+3. compiles `BCBSRespawnCheckpointAlias.psc` and `BCBSRespawnMCM.psc`;
+4. copies the locally created `BCBSRespawnPatch.esp` from Skyrim's `Data` folder;
+5. stages the deployable mod in `package/`;
+6. creates `dist/BCBS-Respawn-Patch-v<VERSION>.zip`.
+
+The build expects `VCPKG_ROOT` to point to the local vcpkg installation. `SKYRIM_DIR` can be set to override the default development path:
+
+```text
+C:\Games\Steam\steamapps\common\Skyrim Special Edition
+```
+
+The Papyrus environment must provide the SkyUI source dependencies in `Data/Source/Scripts`, including at least:
+
+```text
+SKI_ConfigBase.psc
+SKI_ConfigManager.psc
+SKI_QuestBase.psc
+```
+
+The generated release package contains only:
+
+```text
+BCBSRespawnPatch.esp
+Scripts/
+  BCBSRespawnCheckpointAlias.pex
+  BCBSRespawnMCM.pex
+SKSE/
+  Plugins/
+    BCBSRespawnPatch.dll
+```
+
+### Manual native build
+
 Typical configure/build commands:
 
 ```powershell
