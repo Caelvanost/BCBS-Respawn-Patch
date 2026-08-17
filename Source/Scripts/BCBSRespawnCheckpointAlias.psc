@@ -5,9 +5,10 @@ Scriptname BCBSRespawnCheckpointAlias extends ReferenceAlias
 ; This script contains no code from SM Essential Player SE.
 ;
 ; Save detection is supplied by the companion SKSE plugin. The native plugin
-; increments SaveSerial whenever SKSE reports kSaveGame (manual save,
-; quicksave, or autosave). This alias polls that value and updates the local
-; BCBS recall marker.
+; increments SaveSerial whenever SKSE reports kSaveGame. The intended behavior
+; is to cover manual saves, quicksaves, and autosaves; validate all save types
+; on the target runtime before release. This alias polls that value and updates
+; the local BCBS recall marker.
 
 GlobalVariable Property SaveSerial Auto
 
@@ -78,9 +79,8 @@ Function UpdateCoopCheckpointSystem()
         return
     endif
 
-    ; A successful local game save (manual save, quicksave, or autosave)
-    ; requests a checkpoint. Each Skyrim Together client receives and handles
-    ; its own save event independently.
+    ; A local game-save event requests a checkpoint. Each Skyrim Together
+    ; client receives and handles its own save event independently.
     if SaveSerial
         Float currentSaveSerial = SaveSerial.GetValue()
         if currentSaveSerial != lastSeenSaveSerial
