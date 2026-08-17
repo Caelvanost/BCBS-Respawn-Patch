@@ -13,7 +13,7 @@ rem Allow an override, otherwise use the local Skyrim path used for development.
 if not defined SKYRIM_DIR set "SKYRIM_DIR=C:\Games\Steam\steamapps\common\Skyrim Special Edition"
 
 if not defined PAPYRUS_COMPILER set "PAPYRUS_COMPILER=%SKYRIM_DIR%\Papyrus Compiler\PapyrusCompiler.exe"
-if not defined PAPYRUS_FLAGS set "PAPYRUS_FLAGS=%SKYRIM_DIR%\TESV_Papyrus_Flags.flg"
+if not defined PAPYRUS_FLAGS set "PAPYRUS_FLAGS=%SKYRIM_DIR%\Data\Source\Scripts\TESV_Papyrus_Flags.flg"
 set "PAPYRUS_IMPORTS=%SKYRIM_DIR%\Data\Source\Scripts;%ROOT%\Source\Scripts"
 
 call :require_file "%VERSION_FILE%" "VERSION"
