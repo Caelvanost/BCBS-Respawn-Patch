@@ -1,0 +1,7 @@
+{
+  "name": "bcbs-respawn-patch",
+  "version-string": "0.2.0",
+  "dependencies": [
+    "commonlibsse-ng"
+  ]
+}
