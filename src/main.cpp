@@ -24,7 +24,7 @@ namespace
         spdlog::flush_on(spdlog::level::info);
     }
 
-    void SignalSuccessfulSave()
+    void SignalSaveEvent()
     {
         auto* saveSerial = RE::TESForm::LookupByEditorID<RE::TESGlobal>(
             kSaveSerialEditorID);
@@ -42,7 +42,7 @@ namespace
         }
 
         SKSE::log::info(
-            "Game save detected; checkpoint signal serial is now {}",
+            "Game save event detected; checkpoint signal serial is now {}",
             saveSerial->value);
     }
 
@@ -64,7 +64,7 @@ namespace
             break;
 
         case SKSE::MessagingInterface::kSaveGame:
-            SignalSuccessfulSave();
+            SignalSaveEvent();
             break;
 
         default:
