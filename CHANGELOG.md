@@ -20,3 +20,4 @@
 - Release archives now derive their version directly from `VERSION`.
 - The canonical Creation Kit plugin is now `Source/Plugin/BCBSRespawnPatch.esp`.
 - Adopted semantic project versioning: small changes increment the third number; larger changes increment the second number and reset the third to zero.
+- Bumped the development version to `0.2.2` and corrected the default Papyrus flags path to `Data/Source/Scripts/TESV_Papyrus_Flags.flg`.
