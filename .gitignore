@@ -1,18 +1,28 @@
-# Build and release outputs
-build/
-out/
-dist/
-*.pex
-# Release archives and Vortex installation packages
-*.zip
-*.rar
-*.7z
+# Build outputs
+/build/
+/dist/
+/package/
 
-# Logs and local editor files
-*.log
-.vs/
+# Visual Studio / CMake
+/.vs/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+# Native plugin outputs
+*.dll
+*.lib
+*.exp
+*.pdb
+
+# Papyrus compiled output
+*.pex
+
+# Existing local/tooling artifacts
 .vscode/
-*.suo
-*.user
-Desktop.ini
-Thumbs.db
+.idea/
+/.codex/
+/.entire/
