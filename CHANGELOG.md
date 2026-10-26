@@ -39,3 +39,8 @@
 
 - Added the host `vcpkg-cmake-config` dependency required by the pinned CommonLib build environment.
 - The release batch file now prints `vcpkg-manifest-install.log` automatically when CMake configuration fails.
+
+## 0.3.2 - VS 2026 vcpkg fix
+
+- Removed the old 2023 vcpkg builtin baseline that forced fmt 10.0.0 and spdlog 1.12.0.
+- The universal build now uses the current ports from the developer's vcpkg checkout, matching the newer fmt/spdlog toolchain already used successfully by the other SKSE projects on MSVC 19.51 / Visual Studio 2026.
