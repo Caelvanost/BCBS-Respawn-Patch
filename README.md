@@ -1,6 +1,6 @@
 # BCBS Respawn Patch
 
-**Current version: `0.3.1`**
+**Current version: `0.3.2`**
 
 Standalone dynamic checkpoint add-on for **Basic Co-op Bleedout System for Skyrim Together**.
 
@@ -97,7 +97,7 @@ See [`Source/Plugin/PLUGIN_SETUP.md`](Source/Plugin/PLUGIN_SETUP.md).
 
 Version policy:
 
-- small change / bugfix: increment the third number (`0.3.1` -> `0.3.2`);
+- small change / bugfix: increment the third number (`0.3.2` -> `0.3.3`);
 - larger feature/change: increment the second number and reset the third to zero (`0.3.1` -> `0.4.0`).
 
 When the version changes, keep the displayed version in this README and `vcpkg.json` synchronized with `VERSION`.
@@ -110,7 +110,7 @@ dist/BCBS-Respawn-Patch-vX.Y.Z.zip
 
 ## Build
 
-The native listener uses a pinned MIT universal-runtime CommonLibSSE-NG fork that supports Skyrim 1.6.x and 1.7.x in the same DLL. CMake fetches the pinned source into `.deps/`; vcpkg supplies the remaining native dependencies with the `x64-windows-static` triplet.
+The native listener uses a pinned MIT universal-runtime CommonLibSSE-NG fork that supports Skyrim 1.6.x and 1.7.x in the same DLL. CMake fetches the pinned source into `.deps/`; vcpkg supplies the remaining native dependencies with the `x64-windows-static` triplet. The manifest intentionally does not pin an old builtin baseline, so it uses the current ports from the local vcpkg checkout; this avoids obsolete fmt/spdlog ports that fail with Visual Studio 2026.
 
 ### Automated release build
 
