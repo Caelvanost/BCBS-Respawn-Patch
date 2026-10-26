@@ -10,6 +10,8 @@ After editing and saving the plugin in the Creation Kit, copy the current canoni
 
 ## Runtime requirement
 
+The 0.3.x native plugin targets Skyrim **1.6.1170 and 1.7.x with one DLL**. Install the SKSE and Address Library versions matching the local Skyrim runtime. Skyrim 1.7.x requires an Address Library build using format V5.
+
 The configuration menu uses the standard SkyUI MCM API (`SKI_ConfigBase`), so **SkyUI is required** at runtime. MCM Helper is not required.
 
 ## Global variables
