@@ -46,6 +46,13 @@ if errorlevel 1 (
     exit /b 1
 )
 
+where git >nul 2>nul
+if errorlevel 1 (
+    echo [ERROR] git was not found in PATH.
+    echo Git is required to fetch the pinned universal CommonLibSSE-NG source.
+    exit /b 1
+)
+
 if not defined VCPKG_ROOT (
     echo [ERROR] VCPKG_ROOT is not defined.
     echo Set it to your vcpkg installation before running this script.
@@ -69,7 +76,7 @@ echo ============================================================
 echo.
 
 echo [1/5] Configuring native plugin...
-cmake -S "%ROOT%" -B "%BUILD_DIR%" -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake"
+cmake -S "%ROOT%" -B "%BUILD_DIR%" -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows-static
 if errorlevel 1 goto :fail
 
 echo.
