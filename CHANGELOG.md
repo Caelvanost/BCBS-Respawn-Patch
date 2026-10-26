@@ -22,3 +22,15 @@
 - Adopted semantic project versioning: small changes increment the third number; larger changes increment the second number and reset the third to zero.
 - Bumped the development version to `0.2.2` and corrected the default Papyrus flags path to `Data/Source/Scripts/TESV_Papyrus_Flags.flg`.
 - Bumped the development version to `0.2.3` and exposed the standard `string_view` literal namespace in the private PCH so CommonLibSSE-NG's generated plugin metadata compiles with MSVC 19.51 / Visual Studio 2026.
+
+## 0.3.0 - Universal runtime beta
+
+- Migrated the native plugin away from CommonLibSSE-NG 3.5.3.
+- Added Address Library V5 support for Skyrim 1.7.x.
+- Added one-DLL support targeting Skyrim 1.6.1170, 1.7.99 and 1.7.104.
+- Added explicit SKSE plugin metadata for both Address Library legacy and V5 formats.
+- Pinned the MIT universal-runtime CommonLibSSE-NG fork by Zzyxz at commit `6fcfb68af0870e345a3656ac6da371a694fdb374`.
+- Removed the obsolete colorglass vcpkg registry.
+- Switched native dependencies to the static vcpkg triplet for a self-contained plugin DLL.
+- Added a pre-init Address Library presence check with runtime-specific logging.
+- Skyrim 1.7.104 runtime behavior still requires in-game beta validation.
