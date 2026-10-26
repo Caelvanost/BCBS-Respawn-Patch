@@ -1,7 +1,11 @@
 {
   "name": "bcbs-respawn-patch",
-  "version-string": "0.2.3",
+  "version-string": "0.3.0",
+  "description": "Dynamic BCBS checkpoints for Skyrim Together, supporting Skyrim 1.6.x and 1.7.x with one SKSE DLL.",
+  "license": "MIT",
+  "builtin-baseline": "78b61582c9e093fda56a01ebb654be15a0033897",
   "dependencies": [
-    "commonlibsse-ng"
+    "rapidcsv",
+    "spdlog"
   ]
 }
