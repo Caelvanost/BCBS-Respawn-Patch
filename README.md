@@ -1,8 +1,20 @@
 # BCBS Respawn Patch
 
-**Current version: `0.2.3`**
+**Current version: `0.3.0`**
 
 Standalone dynamic checkpoint add-on for **Basic Co-op Bleedout System for Skyrim Together**.
+
+## Supported Skyrim runtimes
+
+Version 0.3.0 uses one universal SKSE DLL for the AE-family runtimes used by this project:
+
+- **Skyrim 1.6.1170** — supported target.
+- **Skyrim 1.7.99** — supported target.
+- **Skyrim 1.7.104** — supported target.
+
+The 0.2.x DLL was built against CommonLibSSE-NG 3.5.3 and cannot read Skyrim 1.7's Address Library V5 files. Version 0.3.0 migrates the native plugin to the MIT universal-runtime CommonLibSSE-NG fork by Zzyxz, pinned to commit `6fcfb68af0870e345a3656ac6da371a694fdb374`. That fork supports Address Library format 2 used by Skyrim 1.6.x and format 5 used by Skyrim 1.7.x.
+
+The 1.7.104 target still requires in-game validation before the beta is considered fully verified.
 
 This project does not modify or redistribute `aaaEssentialPlayerScript` from SM Essential Player SE. The checkpoint logic lives in its own player alias script, while a very small SKSE plugin listens for game-save events.
 
@@ -85,8 +97,8 @@ See [`Source/Plugin/PLUGIN_SETUP.md`](Source/Plugin/PLUGIN_SETUP.md).
 
 Version policy:
 
-- small change / bugfix: increment the third number (`0.2.2` -> `0.2.3`);
-- larger feature/change: increment the second number and reset the third to zero (`0.2.3` -> `0.3.0`).
+- small change / bugfix: increment the third number (`0.3.0` -> `0.3.1`);
+- larger feature/change: increment the second number and reset the third to zero (`0.3.1` -> `0.4.0`).
 
 When the version changes, keep the displayed version in this README and `vcpkg.json` synchronized with `VERSION`.
 
@@ -98,7 +110,7 @@ dist/BCBS-Respawn-Patch-vX.Y.Z.zip
 
 ## Build
 
-The native listener uses CommonLibSSE-NG and the same vcpkg registry configuration used by the other Caelvanost SKSE projects.
+The native listener uses a pinned MIT universal-runtime CommonLibSSE-NG fork that supports Skyrim 1.6.x and 1.7.x in the same DLL. CMake fetches the pinned source into `.deps/`; vcpkg supplies the remaining native dependencies with the `x64-windows-static` triplet.
 
 ### Automated release build
 
@@ -123,7 +135,7 @@ The script:
 5. stages the deployable mod in `package/`;
 6. creates `dist/BCBS-Respawn-Patch-v<VERSION>.zip`.
 
-The build expects `VCPKG_ROOT` to point to the local vcpkg installation. `SKYRIM_DIR` can be set to override the default development path:
+The build expects both `git` and `cmake` in `PATH`, and `VCPKG_ROOT` to point to the local vcpkg installation. `SKYRIM_DIR` can be set to override the default development path:
 
 ```text
 C:\Games\Steam\steamapps\common\Skyrim Special Edition
@@ -163,9 +175,13 @@ SKSE/
 Typical configure/build commands:
 
 ```powershell
-cmake -S . -B build -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+cmake -S . -B build `
+  -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" `
+  -DVCPKG_TARGET_TRIPLET=x64-windows-static
 cmake --build build --config Release
 ```
+
+The CommonLib source is fetched from `Zzyxz/CommonLibSSE-NG` at the pinned revision recorded in `CMakeLists.txt`. The old `colorglass` vcpkg registry and CommonLibSSE-NG 3.5.3 package are no longer used.
 
 Compile both Papyrus scripts:
 
