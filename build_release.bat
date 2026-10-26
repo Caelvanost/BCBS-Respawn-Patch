@@ -77,7 +77,15 @@ echo.
 
 echo [1/5] Configuring native plugin...
 cmake -S "%ROOT%" -B "%BUILD_DIR%" -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows-static
-if errorlevel 1 goto :fail
+if errorlevel 1 (
+    if exist "%BUILD_DIR%\vcpkg-manifest-install.log" (
+        echo.
+        echo ---------------- vcpkg manifest log ----------------
+        type "%BUILD_DIR%\vcpkg-manifest-install.log"
+        echo ---------------- end vcpkg log ---------------------
+    )
+    goto :fail
+)
 
 echo.
 echo [2/5] Building native plugin (Release)...
