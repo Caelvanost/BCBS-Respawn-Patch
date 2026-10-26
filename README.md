@@ -1,6 +1,6 @@
 # BCBS Respawn Patch
 
-**Current version: `0.3.0`**
+**Current version: `0.3.1`**
 
 Standalone dynamic checkpoint add-on for **Basic Co-op Bleedout System for Skyrim Together**.
 
@@ -97,7 +97,7 @@ See [`Source/Plugin/PLUGIN_SETUP.md`](Source/Plugin/PLUGIN_SETUP.md).
 
 Version policy:
 
-- small change / bugfix: increment the third number (`0.3.0` -> `0.3.1`);
+- small change / bugfix: increment the third number (`0.3.1` -> `0.3.2`);
 - larger feature/change: increment the second number and reset the third to zero (`0.3.1` -> `0.4.0`).
 
 When the version changes, keep the displayed version in this README and `vcpkg.json` synchronized with `VERSION`.
