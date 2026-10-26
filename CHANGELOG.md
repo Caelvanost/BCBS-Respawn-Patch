@@ -34,3 +34,8 @@
 - Switched native dependencies to the static vcpkg triplet for a self-contained plugin DLL.
 - Added a pre-init Address Library presence check with runtime-specific logging.
 - Skyrim 1.7.104 runtime behavior still requires in-game beta validation.
+
+## 0.3.1 - Build fix
+
+- Added the host `vcpkg-cmake-config` dependency required by the pinned CommonLib build environment.
+- The release batch file now prints `vcpkg-manifest-install.log` automatically when CMake configuration fails.
